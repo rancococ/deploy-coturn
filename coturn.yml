@@ -1,0 +1,26 @@
+##########################################################################
+# 部署配置文件(base)
+# 本配置文件(xx.yml)中的变量(${xxx})是从同级目录下的.env文件中读取的
+##########################################################################
+# compose支持的版本2
+version: "2"
+services:
+  # coturn
+  coturn:
+    image: ${IMAGE_REPO}/${IMAGE_COTURN}
+    container_name: "coturn.${PRODUCT_NAME}.${COMPANY_NAME}"
+    hostname: "coturn.${PRODUCT_NAME}.${COMPANY_NAME}"
+    restart: "always"
+    env_file:
+      - ./coturn.env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./volume/coturn/conf/turnserver.conf:/etc/coturn/turnserver.conf:ro
+      - ./volume/coturn/data:/var/lib/coturn:rw
+      - ./volume/coturn/logs:/var/log/coturn:rw
+    network_mode: "host"
+    extra_hosts:
+      - "coturn.${PRODUCT_NAME}.${COMPANY_NAME}:${HOST_IP}"
+    # cap_add:
+    #   - NET_ADMIN
+    #   - SYS_ADMIN
