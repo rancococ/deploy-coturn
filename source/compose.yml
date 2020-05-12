@@ -7,7 +7,7 @@ version: "2"
 services:
   # coturn
   coturn:
-    image: ${IMAGE_REPO}/${IMAGE_COTURN}
+    image: "${IMAGE_COTURN}"
     container_name: "coturn.${PRODUCT_NAME}.${COMPANY_NAME}"
     hostname: "coturn.${PRODUCT_NAME}.${COMPANY_NAME}"
     restart: "always"
